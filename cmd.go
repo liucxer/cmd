@@ -563,6 +563,7 @@ func (rw *OutputBuffer) Lines() []string {
 	// Scanners are io.Readers which effectively destroy the buffer by reading
 	// to EOF. So once we scan the buf to lines, the buf is empty again.
 	s := bufio.NewScanner(rw.buf)
+	s.Buffer(rw.buf.Bytes(), 1024*1024)
 	for s.Scan() {
 		rw.lines = append(rw.lines, s.Text())
 	}
